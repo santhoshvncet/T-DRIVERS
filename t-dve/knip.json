@@ -1,0 +1,15 @@
+{
+  "$schema": "https://unpkg.com/knip@next/schema.json",
+  "entry": ["src/main.tsx"],        
+  "ignore": ["android/**", "ios/**", "node_modules/**", "dist/**", "build/**", "cypress/**"],
+  "include": [
+    "files",
+    "exports",
+    "types",
+    "enumMembers",
+    "classMembers",
+    "duplicates",
+    "unlisted",
+    "unresolved"
+  ]
+}

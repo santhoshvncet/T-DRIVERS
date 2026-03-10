@@ -1,0 +1,1 @@
+export type RoleTypes = 'User' | 'Owner' | 'Driver' | "Admin" | "Super Admin"

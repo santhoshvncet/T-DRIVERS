@@ -1,0 +1,8 @@
+{
+  "name": "tdrivers",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite",
+  "id": "dcb440c0"
+}

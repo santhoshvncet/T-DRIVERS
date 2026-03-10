@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Background color -->
+    <item android:drawable="@color/splash_bg_color" />
+
+    <!-- Percentage insets for responsive scaling -->
+    <item>
+        <inset
+            android:insetLeft="20%"
+            android:insetRight="20%"
+            android:insetTop="30%"
+            android:insetBottom="30%">
+            <bitmap
+                android:src="@drawable/splash"
+                android:gravity="center"
+                android:tileMode="disabled"
+                tools:ignore="ResourceCycle" />
+        </inset>
+    </item>
+
+</layer-list>

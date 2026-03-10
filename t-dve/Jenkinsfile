@@ -1,0 +1,117 @@
+pipeline {
+    agent any
+
+    environment {
+        AWS_REGION           = 'ap-south-1'
+        AWS_ACCOUNT_ID       = '029552764491'
+        ECR_REPO             = 'collegeraasta-ecr'
+        URL_REGISTRY         = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+        IMAGE_TAG            = "latest"
+        IMAGE_NAME           = "${ECR_REPO}:${IMAGE_TAG}"
+        IMAGE_URI            = "${URL_REGISTRY}/${IMAGE_NAME}"
+        ECS_CLUSTER          = 'collegeraasta-ecs123'        
+        ECS_SERVICE          = 'collegeraasta-ecs-service-ye6txfhs'         // ✅ Update with your ECS service name
+        TASK_FAMILY          = 'collegeraasta-ecs'             // ✅ Update with your ECS task family
+        CONTAINER_NAME       = 'collegeraasta'                 // ✅ Must match container name in ECS task
+    }
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                git credentialsId: 'gitlab-token',
+                    branch: 'main',
+                    url: 'https://gitlab.com/collegeraasta/collegeraasta.git'
+            }
+        }
+
+        stage('Build and Push Docker Image') {
+            steps {
+                withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'aws-configure',
+                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+                ]]) {
+                    sh '''
+                        echo "🔐 Logging into AWS ECR..."
+                        aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+                        aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+                        aws configure set region $AWS_REGION
+
+                        aws ecr get-login-password | docker login --username AWS --password-stdin $URL_REGISTRY
+
+                        echo "🐳 Building Docker image..."
+                        docker build -t $IMAGE_NAME .
+
+                        echo "🏷️ Tagging image..."
+                        docker tag $IMAGE_NAME $IMAGE_URI
+
+                        echo "📤 Pushing image to ECR..."
+                        docker push $IMAGE_URI
+                    '''
+                }
+            }
+        }
+
+        stage('Deploy to ECS') {
+            steps {
+                withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'aws-configure',
+                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+                ]]) {
+                    sh '''
+                        echo "📋 Fetching current task definition..."
+                        aws configure set region $AWS_REGION
+
+                        aws ecs describe-task-definition --task-definition $TASK_FAMILY > task-def.json
+
+                        echo "🛠️ Creating new task definition with updated image..."
+
+                        cat task-def.json | \
+                        jq '.taskDefinition |
+                            {
+                                family: .family,
+                                networkMode: .networkMode,
+                                containerDefinitions: (.containerDefinitions | map(if .name == "'$CONTAINER_NAME'" then .image = "'$IMAGE_URI'" else . end)),
+                                requiresCompatibilities: .requiresCompatibilities,
+                                cpu: .cpu,
+                                memory: .memory
+                            }
+                            + (if .executionRoleArn != null then {executionRoleArn: .executionRoleArn} else {} end)
+                            + (if .taskRoleArn != null then {taskRoleArn: .taskRoleArn} else {} end)' > new-task-def.json
+
+                        echo "📝 Registering updated task definition..."
+                        NEW_TASK_DEF_ARN=$(aws ecs register-task-definition \
+                            --cli-input-json file://new-task-def.json \
+                            --query 'taskDefinition.taskDefinitionArn' \
+                            --output text)
+
+                        echo "🚀 Updating ECS service..."
+                        aws ecs update-service \
+                            --cluster $ECS_CLUSTER \
+                            --service $ECS_SERVICE \
+                            --task-definition $NEW_TASK_DEF_ARN
+
+                        echo "⏳ Waiting for ECS service to stabilize..."
+                        aws ecs wait services-stable \
+                            --cluster $ECS_CLUSTER \
+                            --services $ECS_SERVICE
+
+                        echo "✅ Deployment complete!"
+                    '''
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "✅ Image pushed and ECS deployment successful: ${IMAGE_URI}"
+        }
+        failure {
+            echo "❌ Deployment failed. Please check the logs."
+        }
+    }
+}

@@ -1,0 +1,14 @@
+.trip-modal {
+  --border-radius: 16px;
+  --height: auto;
+}
+
+
+
+
+.trip-modal::part(handle) {
+  background: #ccc;
+  width: 40px;
+  height: 4px;
+  border-radius: 4px;
+}

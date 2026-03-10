@@ -1,0 +1,445 @@
+.logo-hide {
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.25s ease-out;
+    overflow: hidden;
+    background: #d5d5d5;
+}
+.payment-card {
+  padding: 14px 18px;
+  border-radius: 18px;
+}
+
+/* Divider between Chennai & Bengaluru */
+.location-divider {
+  height: 8px;
+  border-bottom: 1px solid #ddd;
+  margin-left: 32px;      /* <-- usually this causes long line */
+}
+
+
+/* Align date to the divider */
+.date-col {
+  display: flex;
+  align-items: center;     /* IMPORTANT -> vertically centers with divider */
+  justify-content: flex-end;
+  padding-top: 6px;
+}
+
+.date-text {
+  font-size: 18px;
+  font-weight: 700;
+  color: #000;
+}
+
+/* Fix spacing */
+.location-item {
+  --padding-start: 0;
+  --inner-padding-start: 0;
+  --inner-padding-end: 0;
+}
+
+.location-item ion-label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #3a2e6e;
+}
+
+/* Perfect bright yellow button */
+.amount-btn {
+  width: 100%;
+  height: 52px;
+  border-radius: 14px;
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: none;
+
+  --background: #FFD600 !important;
+  --background-hover: #FFD600 !important;
+  --background-activated: #FFD600 !important;
+  --background-focused: #FFD600 !important;
+
+  color: #000 !important;
+  pointer-events: none; /* prevents interaction but keeps bright color */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.custom-action-sheet .action-sheet-backdrop {
+  background: transparent !important;
+}
+
+  .logo-show {
+    max-height: 300px;
+    transition: max-height 0.25s ease-in;
+}
+.centered-select {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.centered-select ion-select {
+  text-align: center;
+  --padding-start: 0;
+  --padding-end: 0;
+  width: 100%;
+}
+
+/* Center placeholder text */
+.centered-select ion-select::part(text) {
+  text-align: center;
+  margin: 0 auto;
+}
+
+/* Center the dropdown arrow */
+.centered-select ion-select::part(icon) {
+  position: absolute;
+  right: 50%;
+  transform: translateX(50%);
+}
+
+/* Hide arrow when value is selected */
+.centered-select.has-value ion-select::part(icon) {
+  display: none;
+}
+
+/* Center dropdown option text */
+ion-select-option {
+  text-align: center;
+}
+
+
+
+/* Fix autofill background (browser styles) */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+    box-shadow: 0 0 0px 1000px white inset !important;
+    -webkit-text-fill-color: #000 !important;
+}
+
+/* Remove background from readonly or disabled IonInput */
+ion-input input[readonly],
+ion-input input[disabled] {
+    background-color: transparent !important;
+}
+
+.custom-select {
+    --border-width: 1px;
+    --border-color: #efe008; /* Tailwind primary color */
+    --border-radius: 8px;
+    --background: #ffffff;
+    --placeholder-color: #1A73E8;
+    --color: #f4dd10;
+    --box-shadow: none;
+    --padding-start: 12px;
+    --padding-end: 12px;
+    --padding-top: 10px;
+    --padding-bottom: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    text-decoration: none;
+  }
+  
+  .custom-select::part(icon) {
+    color: #7C3AED; /* optional: dropdown arrow color */
+  }
+  
+  .custom-select::part(text) {
+    font-weight: 600;
+  }
+  
+.announcement-modal::part(backdrop) {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+.announcement-modal::part(content) {
+  background: transparent; /* Keep modal content transparent */
+  box-shadow: none;
+}
+
+/* ion-header  {
+
+  padding-top: calc(env(safe-area-inset-top, 0px));
+
+} */
+
+/* ion-header {
+padding-top: 36px;
+} */
+
+ion-toolbar {
+  --padding-top: var(--ion-safe-area-top) - 3px;
+}
+
+
+:root {
+  --tab-bar-height: 56px;
+}
+
+ion-content {
+  --padding-bottom: calc(var(--safe-area-inset-bottom, 0px) + var(--tab-bar-height));
+}
+
+ion-modal{
+  --padding-bottom: calc(var(--safe-area-inset-bottom, 0px) + 56px);
+}
+
+ion-tab-bar {
+  height: var(--tab-bar-height);
+  padding-bottom: var(--safe-area-inset-bottom, 0px);
+}
+
+
+ion-tabs {
+position: 'fixed';
+width: '100%';
+ /* padding-top: calc(var(--safe-area-top, env(safe-area-inset-top, 0px)) + 10px); */
+/* borderTop: 'none';
+zIndex: 10; */
+ /* padding-bottom: calc(env(safe-area-inset-bottom,0px));  */
+  background: linear-gradient(
+    to top,
+    #141A46 50%, 
+    rgba(20, 26, 70, 0) 50% 
+  );
+}
+
+
+
+.center-modal .modal-wrapper {
+  position: absolute;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: auto !important;
+  height: auto !important;
+  border-radius: 24px;
+}
+.calendar-custom {
+  --background: #ffffff;
+  --ion-color-primary: #FFD600;
+  --ion-color-primary-shade: #FFD600;
+  --ion-color-primary-tint: #FFD600;
+  border-radius: 20px;
+  border: 1px solid #eee;
+}
+
+/* Slider Yellow + Bubble */
+.yellow-slider {
+  width: 100%;
+  accent-color: #FFD600;
+}
+
+.bubble {
+  background: white;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-weight: 500;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+.hide-tripcard-arrow * {
+  pointer-events: none;
+}
+
+.hide-tripcard-arrow ion-icon,
+.hide-tripcard-arrow button {
+  display: none !important;
+}
+
+.center-modal::part(content) {
+  width: 90%;
+  max-width: 360px;
+  height: auto;
+  border-radius: 16px;
+  margin: auto;
+}
+/* Transparent modal background */
+.fare-rules-modal::part(content) {
+  background: transparent;
+}
+
+.fare-rules-modal::part(backdrop) {
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+}
+.add-datetime-modal .modal-backdrop {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.2); 
+  backdrop-filter: blur(8px); 
+  z-index: 50;
+}
+
+.add-datetime-modal .modal-card {
+  background: #fff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 400px;
+  padding: 24px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  position: relative;
+}
+
+.add-datetime-modal .modal-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+.add-datetime-modal .modal-title {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.add-datetime-modal .modal-confirm-btn {
+  background: #FFD700;
+  color: #000;
+  border-radius: 8px;
+  margin-top: 24px;
+/* Custom sheet modal styling */
+.ion-modal-custom {
+  /* these CSS variables are provided by Ionic */
+  --border-radius: 16px;
+  /* --height: auto; */
+  --max-height: 60vh;        /* up to 60% of viewport height */
+  --width: 100%;
+  --backdrop-opacity: 0.4;
+}
+
+/* Optional: center and limit width on larger screens */
+@media (min-width: 768px) {
+  .ion-modal-custom {
+    --width: 480px;
+    margin: 0 auto;
+  }
+}}
+
+/* 
+ion-modal::part(content) {
+  padding-bottom:  70px;
+} */
+
+.table-container {
+  width: 100%;
+  max-height: 60vh;  /* 50% of the viewport height for vertical scroll */
+  overflow-x: auto;  /* Enable horizontal scrolling */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on mobile */
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  
+}
+
+.table th, .table td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  text-align: center;  /* Align all cells to the center */
+}
+
+.table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+/* Sticky header */
+thead {
+  position: sticky;
+  top: 0;
+  background-color: #f1f1f1;
+  z-index: 10;
+}
+
+
+
+.table td {
+  text-align: center;  /* Align all cells to the center */
+}
+
+/* Apply min-width to ensure consistency across all columns */
+.table th:nth-child(1), .table td:nth-child(1) {
+  min-width: 100px;  /* Set a minimum width for the Date column */
+}
+
+.table th:nth-child(2), .table td:nth-child(2) {
+  min-width: 100px;  /* Set a minimum width for the Trip Details column */
+}
+
+.table th:nth-child(3), .table td:nth-child(3) {
+  min-width: 260px;  /* Set a minimum width for the Amount column */
+}
+
+.table th:nth-child(4), .table td:nth-child(4) {
+  min-width: 120px;  /* Set a minimum width for the Amount for Driver column */
+}
+
+.table th:nth-child(5), .table td:nth-child(5) {
+  min-width: 120px;  /* Set a minimum width for the Amount for Company column */
+}
+
+.table th:nth-child(6), .table td:nth-child(6) {
+  min-width: 160px;  /* Set a minimum width for the Amount for Company column */
+}
+
+ion-content {
+  --padding-bottom: calc(var(--safe-area-inset-bottom) + 0.5rem);
+}
+
+/* Footer row */
+.table tfoot td {
+  font-weight: bold;
+  background-color: #f4f4f4;
+  text-align: center;  /* Align text in the footer to the center */
+}
+
+ion-datetime::part(day).datetime-day--selected,
+ion-datetime::part(day).datetime-day--in-range,
+ion-datetime::part(day).datetime-day--start,
+ion-datetime::part(day).datetime-day--end {
+  background-color: #2563eb !important;
+  color: white !important;
+  border-radius: 50%;
+}
+
+/* iOS only */
+.ios ion-datetime.calendar-custom::part(day) {
+  border-radius: 999px;
+}
+
+/* Selected / range days – force full yellow circle */
+.ios ion-datetime.calendar-custom::part(day).datetime-day--selected,
+.ios ion-datetime.calendar-custom::part(day).datetime-day--start,
+.ios ion-datetime.calendar-custom::part(day).datetime-day--end,
+.ios ion-datetime.calendar-custom::part(day).datetime-day--in-range {
+  background-color: #FFD600 !important;
+  color: #000 !important;
+  border-radius: 999px !important;
+}
+
+/* iOS adds grey bg on the inner element for range – kill/override it */
+.ios ion-datetime.calendar-custom::part(day).datetime-day--selected .datetime-day-inner,
+.ios ion-datetime.calendar-custom::part(day).datetime-day--start   .datetime-day-inner,
+.ios ion-datetime.calendar-custom::part(day).datetime-day--end     .datetime-day-inner,
+.ios ion-datetime.calendar-custom::part(day).datetime-day--in-range .datetime-day-inner {
+  background-color: #FFD600 !important;
+  color: #000 !important;
+  border-radius: 999px !important;
+}

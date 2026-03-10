@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">tdrivers</string>
+    <string name="title_activity_main">tdrivers</string>
+    <string name="package_name">com.tdrivers.app</string>
+    <string name="custom_url_scheme">com.tdrivers.app</string>
+        <string name="app_id">1:839858084690:android:178605f1958bfd33a2788b</string>  
+</resources>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>T-Driver</title>
+
+    <!-- ✅ MUST BE FIRST -->
+    <script>
+      if (sessionStorage.getItem("skipFallback") === "true") {
+        sessionStorage.removeItem("skipFallback");
+        document.documentElement.classList.add("skip-fallback");
+      }
+    </script>
+
+    <base href="/" />
+    <!-- here i changed content = "light dark" to "light" -->
+    <meta name="color-scheme" content="light" />
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="shortcut icon" type="image/png" href="./public/logo1.png" />
+
+    <!-- add to homescreen for ios -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Ionic App" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+    <style>
+      /* ✅ SKIP FALLBACK STYLES */
+      .skip-fallback #fallback {
+        display: none !important;
+      }
+
+      /* .skip-fallback #root {
+        opacity: 1 !important;
+      } */
+
+      #fallback {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fff;
+        z-index: 9999;
+      }
+      @keyframes bounce {
+        to {
+          transform: translateY(-6px);
+          opacity: 1;
+        }
+      }
+      .hide {
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.15s ease;
+      }
+      html,
+      body {
+        background: #fff;
+      }
+      #root {
+        opacity: 0;
+        transition: opacity 0.25s ease;
+      }
+      #root.visible {
+        opacity: 1;
+      }
+      #root:not(.visible) {
+        background: #fff;
+      }
+
+      #fallback {
+        flex-direction: column; /* stack vertically */
+        text-align: center; /* center text horizontally */
+      }
+
+      .spinner {
+        width: 28px;
+        height: 28px;
+        border: 3px solid rgba(0, 0, 0, 0.15);
+        border-top-color: #222;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+        margin-top: 4px; /* space under the title */
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <div id="fallback" role="status" aria-live="polite" aria-busy="true">
+      <div class="spinner" aria-hidden="true"></div>
+      <h3 class="app-title">Tdriver</h3>
+    </div>
+    <script>
+      const kill = () => {
+        const fb = document.getElementById("fallback");
+        const root = document.getElementById("root");
+        if (!fb || !root) return;
+
+        // fade-in the app content
+        root.classList.add("visible");
+        if (!fb.classList.contains("hide")) {
+          fb.classList.add("hide");
+          fb.addEventListener("transitionend", () => fb.remove(), {
+            once: true,
+          });
+        }
+      };
+
+      const whenAppReady = () => {
+        const root = document.getElementById("root");
+        // wait until React actually rendered something into #root
+        if (!root || root.childElementCount === 0) {
+          requestAnimationFrame(whenAppReady); // keep checking next frame
+          return;
+        }
+        requestAnimationFrame(kill); // hide on the next paint
+      };
+
+      // App dispatches this from main.tsx after render
+      window.addEventListener("app-mounted", whenAppReady);
+    </script>
+
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

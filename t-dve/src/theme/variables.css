@@ -1,0 +1,131 @@
+/* Ionic Variables and Theming. For more info, please see:
+http://ionicframework.com/docs/theming/ */
+
+/** Ionic CSS Variables **/
+:root {
+  --ion-color-primary: #ffc800;
+  --ion-color-primary-rgb: 255, 200, 0;
+  --ion-color-primary-contrast: #000000;
+  --ion-color-primary-contrast-rgb: 0, 0, 0;
+  --ion-color-primary-shade: #e0b400;
+  --ion-color-primary-tint: #ffd239; 
+
+  --ion-color-secondary: #f3e67f;
+  --ion-color-secondary-rgb: 0, 141, 216;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #FB8B05;
+  --ion-color-secondary-tint: #ca7105;
+  --ion-color-secondary-background: rgba(26, 152, 220, 0.2);
+
+  --ion-color-tertiary: #008dd8;
+  --ion-color-tertiary-rgb: 0, 141, 216;
+  --ion-color-tertiary-contrast: #ffffff;
+  --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+  --ion-color-tertiary-shade: #007cbe;
+  --ion-color-tertiary-tint: #1a98dc;
+
+  --ion-color-success: #5cb85c;
+  --ion-color-success-rgb: 92, 184, 92;
+  --ion-color-success-contrast: #f8f8f8;
+  --ion-color-success-contrast-rgb: 0, 0, 0;
+  --ion-color-success-shade: #51a251;
+  --ion-color-success-tint: #6cbf6c;
+
+  --ion-color-warning: #f0ad4e;
+  --ion-color-warning-rgb: 240, 173, 78;
+  --ion-color-warning-contrast: #000000;
+  --ion-color-warning-contrast-rgb: 0, 0, 0;
+  --ion-color-warning-shade: #d39845;
+  --ion-color-warning-tint: #f2b560;
+  --ion-color-warning-light: #F7DCB8;
+
+  --ion-color-danger: #d9534f;
+  --ion-color-danger-rgb: 217, 83, 79;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #bf4946;
+  --ion-color-danger-tint: #dd6461;
+
+  --ion-color-medium: #999999;
+  --ion-color-medium-rgb: 153, 153, 153;
+  --ion-color-medium-contrast: #000000;
+  --ion-color-medium-contrast-rgb: 0, 0, 0;
+  --ion-color-medium-shade: #878787;
+  --ion-color-medium-tint: #a3a3a3;
+
+  --ion-color-light: #f4f5f8;
+  --ion-color-light-rgb: 244, 245, 248;
+  --ion-color-light-contrast: #000000;
+  --ion-color-light-contrast-rgb: 0, 0, 0;
+  --ion-color-light-shade: #d7d8da;
+  --ion-color-light-tint: #f5f6f9;
+
+  --ion-color-white: #ffffff;
+  --ion-color-white-rgb: 255, 255, 255;
+  --ion-color-white-contrast: rgb(0, 0, 0);
+  --ion-color-white-contrast-rgb: 0, 0, 0;
+  --ion-color-white-shade: #d7d8da;
+  --ion-color-white-tint: #d7d8da;
+
+  --ion-grid-padding: 0;
+  --ion-grid-column-padding: 0;
+
+  --ion-color-white: #ffffff;
+  --ion-color-black: #000000;  
+  --bg-canvas: #f6f7f9;
+
+  /* Set the background of the entire app */
+  --ion-background-color: #F2F9FB;
+  /* Set the font family of the entire app */
+  --ion-font-family: "Inter", sans-serif;
+
+
+
+   --ion-color-myGreen: #22C55E; /* Change to any green you want */
+  --ion-color-myGreen-rgb: 34, 197, 94;
+  --ion-color-myGreen-contrast: #ffffff;
+  --ion-color-myGreen-contrast-rgb: 255, 255, 255;
+  --ion-color-myGreen-shade: #1eb155;
+  --ion-color-myGreen-tint: #38cf72;
+
+  --ion-text-color: rgba(4, 9, 13);
+  --text-color-primary: rgba(4, 9, 13);
+  --text-color-medium: rgba(4, 9, 13,0.6);
+  --text-color-inactive: rgba(4, 9, 13,0.5);
+  --text-color-disabled: rgba(4, 9, 13,0.4);
+  --text-color-link: rgb(0, 141, 216);
+  --text-icon-primary: rgb(113, 113, 113);
+
+  --unloading-point: rgba(236, 100, 23, 1);
+  --loading-point: rgba(21, 129, 66, 1);
+  --intermediate-stops: rgba(97, 97, 97, 1);
+
+  --font-family: "Inter", sans-serif;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --font-xs: 11px;
+  --font-sm: 12px;
+  --font-md: 13px;
+  --font-base: 14px;
+  --font-lg: 16px;
+  --font-xl: 20px;
+  --font-2xl: 24px;
+
+  
+}
+
+
+
+.ion-color-myGreen {
+  --ion-color-base: var(--ion-color-myGreen);
+  --ion-color-base-rgb: var(--ion-color-myGreen-rgb);
+  --ion-color-contrast: var(--ion-color-myGreen-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-myGreen-contrast-rgb);
+  --ion-color-shade: var(--ion-color-myGreen-shade);
+  --ion-color-tint: var(--ion-color-myGreen-tint);
+}

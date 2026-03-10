@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "839858084690",
+    "project_id": "tdriver-5a221",
+    "storage_bucket": "tdriver-5a221.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:839858084690:android:178605f1958bfd33a2788b",
+        "android_client_info": {
+          "package_name": "com.tdriver.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUIZX7r__0ofdTbTpAxorT27PJofmrufI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:839858084690:android:178605f1958bfd33a2788b",
+        "android_client_info": {
+          "package_name": "com.tdrivers.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUIZX7r__0ofdTbTpAxorT27PJofmrufI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

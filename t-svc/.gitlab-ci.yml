@@ -1,0 +1,115 @@
+stages:
+  - test
+  - build
+  - deploy
+
+# ---------- Global variables ----------
+variables:
+  IMAGE_TAG: "latest" # You can also use ${CI_COMMIT_SHORT_SHA}
+
+  AWS_REGION: ap-south-1
+  AWS_ACCOUNT_ID: 467737512811
+  ECR_REPO: t-driver
+  URL_REGISTRY: 467737512811.dkr.ecr.ap-south-1.amazonaws.com
+  IMAGE_NAME: t-services
+  IMAGE_URI: 467737512811.dkr.ecr.ap-south-1.amazonaws.com/t-services:latest
+  CONTAINER_NAME: services
+  HOST_PORT: 3001
+  CONTAINER_PORT: 3000
+
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: "/certs"
+
+# ---------- TEST ----------
+test:
+  stage: test
+  image: node:20-alpine
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - node_modules/
+  script:
+    - echo " Installing dependencies..."
+    - npm install --legacy-peer-deps
+  only:
+    - main
+    - develop
+    - /^feature\/.*$/
+    - merge_requests
+
+# ---------- BUILD & PUSH ----------
+build_and_push:
+  stage: build
+  image: docker:25.0.3
+  services:
+    - docker:25.0.3-dind
+  before_script:
+    - apk add --no-cache python3 py3-pip curl jq
+    - python3 -m venv ~/awscli-venv
+    - source ~/awscli-venv/bin/activate
+    - pip install --upgrade awscli
+    - aws --version
+    - aws ecr get-login-password --region "$AWS_REGION" | docker login --username AWS --password-stdin "$URL_REGISTRY"
+  script:
+    - echo " Building Docker image..."
+    - docker build -t "$IMAGE_URI" .
+    - echo " Pushing image to ECR..."
+    - docker push "$IMAGE_URI"
+  only:
+    - main
+
+# ---------- DEPLOY ----------
+deploy_to_ec2:
+  stage: deploy
+  before_script:
+    - mkdir -p ~/.ssh
+    - |
+      if [ -n "$EC2_SSH_KEY_B64" ]; then
+        echo "$EC2_SSH_KEY_B64" | base64 -d > ~/.ssh/id_rsa
+      else
+        echo "$EC2_SSH_KEY" > ~/.ssh/id_rsa
+      fi
+    - chmod 600 ~/.ssh/id_rsa
+    - ssh-keyscan -H "$EC2_PUBLIC_IP" >> ~/.ssh/known_hosts || true
+
+  script:
+    - |
+      ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no "$EC2_USER@$EC2_PUBLIC_IP" \
+      "AWS_REGION=$AWS_REGION \
+       URL_REGISTRY=$URL_REGISTRY \
+       IMAGE_URI=$IMAGE_URI \
+       CONTAINER_NAME=$CONTAINER_NAME \
+       HOST_PORT=$HOST_PORT \
+       CONTAINER_PORT=$CONTAINER_PORT \
+       bash -s" <<'SSH_EOF'
+
+        set -euo pipefail
+
+        echo " Logging in to ECR..."
+        aws ecr get-login-password --region "$AWS_REGION" \
+          | docker login --username AWS --password-stdin "$URL_REGISTRY"
+
+        echo " Pulling latest image: $IMAGE_URI"
+        docker pull "$IMAGE_URI"
+
+        echo " Removing old container (if exists)..."
+        if docker ps -aq -f name="$CONTAINER_NAME" | grep -q .; then
+          docker stop "$CONTAINER_NAME" || true
+          docker rm "$CONTAINER_NAME" || true
+        fi
+
+        echo " Starting new container.."
+
+        cd /home/ubuntu/t-svc 
+        docker run -d --name "$CONTAINER_NAME" \
+          -p "$HOST_PORT:$CONTAINER_PORT" \
+          --add-host=host.docker.internal:host-gateway \
+          --env-file .env \
+          --restart unless-stopped \
+          "$IMAGE_URI"
+
+        echo " Deployment complete. Container running: $CONTAINER_NAME"
+      SSH_EOF
+
+  only:
+    - main

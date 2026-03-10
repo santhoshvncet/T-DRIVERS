@@ -1,0 +1,9 @@
+const contextKeys = {
+    SET_USER_MOBILE_NUMBER: 'SET_USER_MOBILE_NUMBER',
+    SET_USER: 'SET_USER',
+    SET_AUTHSTATE : 'SET_AUTHSTATE',
+    SET_USER_LANDING_PAGE : "SET_USER_LANDING_PAGE",
+    SET_PAGE:"SET_PAGE"
+}
+
+export default contextKeys
